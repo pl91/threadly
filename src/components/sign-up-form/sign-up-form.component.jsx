@@ -21,7 +21,7 @@ const SignUpForm = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { displayName, email, password, confirmPassword } = formFields;
 
-  console.log(formFields);
+  // console.log(formFields);
 
   const resetFormFields = () => {
     setFormFields(defaultFormFields);
@@ -53,13 +53,13 @@ const SignUpForm = () => {
     }
   };
 
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setFormFields({ ...formFields, [name]: value }); // target by name and set value into a new object
-  };
+  const handleChange = (event) => { 
+    const { name, value } = event.target; // onChange, destructer name and value from event.target
+    setFormFields({ ...formFields, [name]: value }); // update our state value by targeting name and appending new value
+  };                                                
 
   return (
-    <div className="sign-up=container">
+    <div className="sign-up-container">
       <h2>Don't have an account?</h2>
       <span>Sign up with your email and password</span>
       <form onSubmit={handleSubmit}>
@@ -67,9 +67,9 @@ const SignUpForm = () => {
           label="Display Name"
           required
           onChange={handleChange}
-          name="displayName"
+          name="displayName" 
           type="text"
-          value={displayName}
+          value={displayName} // set value to state value ("") -starts as empty string
         />
 
         <FormInput
@@ -98,8 +98,7 @@ const SignUpForm = () => {
           type="password"
           value={confirmPassword}
         />
-
-        {/* <button type="submit">Sign Up</button> */}
+        
         <Button type="submit">Sign Up</Button>
       </form>
     </div>
