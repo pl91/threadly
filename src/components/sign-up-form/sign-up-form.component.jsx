@@ -3,7 +3,7 @@ import { useState } from "react";
 import FormInput from "../form-input/form-input.component";
 import Button from "../button/button.component";
 
-import './sign-up-form-.styles.scss';
+import "./sign-up-form-.styles.scss";
 
 import {
   createAuthUserWithEmailAndPassword,
@@ -20,8 +20,6 @@ const defaultFormFields = {
 const SignUpForm = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { displayName, email, password, confirmPassword } = formFields;
-
-  // console.log(formFields);
 
   const resetFormFields = () => {
     setFormFields(defaultFormFields);
@@ -40,7 +38,6 @@ const SignUpForm = () => {
         email,
         password
       );
-      console.log(user);
 
       await createUserDocumentFromAuth(user, { displayName });
       resetFormFields();
@@ -53,10 +50,10 @@ const SignUpForm = () => {
     }
   };
 
-  const handleChange = (event) => { 
+  const handleChange = (event) => {
     const { name, value } = event.target; // onChange, destructer name and value from event.target
     setFormFields({ ...formFields, [name]: value }); // update our state value by targeting name and appending new value
-  };                                                
+  };
 
   return (
     <div className="sign-up-container">
@@ -67,7 +64,7 @@ const SignUpForm = () => {
           label="Display Name"
           required
           onChange={handleChange}
-          name="displayName" 
+          name="displayName"
           type="text"
           value={displayName} // set value to state value ("") -starts as empty string
         />
@@ -98,7 +95,7 @@ const SignUpForm = () => {
           type="password"
           value={confirmPassword}
         />
-        
+
         <Button type="submit">Sign Up</Button>
       </form>
     </div>

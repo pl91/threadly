@@ -19,14 +19,8 @@ const SignInForm = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password } = formFields;
 
-  console.log(formFields);
-
   const signInWithGoogle = async () => {
-    // destructer user object form response
-    const { user } = await signInWithGooglePopup();
-    // pass user response into our createUserDocumentFromAuth() method
-    const userDocRef = await createUserDocumentFromAuth(user);
-    console.log(userDocRef);
+    await signInWithGooglePopup();
   };
 
   const resetFormFields = () => {
@@ -37,8 +31,9 @@ const SignInForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await signInWithAuthEmailAndPassword(email, password);
-      console.log(response);
+      const { user } = await signInWithAuthEmailAndPassword(email, password);
+      // setCurrentUser(user);
+
       resetFormFields();
     } catch (error) {
       // check if case value matched error.code
