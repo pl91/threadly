@@ -23,7 +23,7 @@ export const UserProvider = ({ children }) => {
       setCurrentUser(user)
     })
 
-    // return unsubscribe on unmount
+    // return unsubscribe on unmount (which is a method we extract from onAuthStateChange)
     return unsubscribe
   }, [])
 
