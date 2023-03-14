@@ -11,6 +11,7 @@ export const UserContext = createContext({
 // all children will have access to UserContext
 export const UserProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
+  // value is what we expose with our context provider
   const value = { currentUser, setCurrentUser };
 
   // runs only once when the component mounts or when our authState changes
