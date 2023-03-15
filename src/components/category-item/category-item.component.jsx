@@ -1,8 +1,8 @@
 import "./category-item.styles.scss";
 
-// de-structer from our prop and return content
-const CategoryItem = ({ category }) => {
-    const { imageUrl, title } = category;
+
+const CategoryItem = ({ category }) => { //accept a category object 
+    const { imageUrl, title } = category; // de-structer from our prop and return content
   return (
     <div className="category-container">
       <div
