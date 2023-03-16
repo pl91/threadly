@@ -61,14 +61,14 @@ export const Cartprovider = ({ children }) => {
   const [cartCount, setCartCount] = useState(0);
   const [cartTotal, setCartTotal] = useState(0);
 
-  // useEffect runs everytime a dependancy changes(cartItems in this case)
-  useEffect(() => {
+  // useEffect runs only when it's dependecies change (cartItems in this case)
+  useEffect(() => { 
     const newCartCount = cartItems.reduce(
       (total, cartItem) => total + cartItem.quantity,
       0 // total is the value returned, default is set to 0
     ); 
-    setCartCount(newCartCount);
-  }, [cartItems]);
+    setCartCount(newCartCount); // set new count 
+  }, [cartItems]); // run code only when cartItems changes
 
     useEffect(() => {
       const newCartTotal = cartItems.reduce(
