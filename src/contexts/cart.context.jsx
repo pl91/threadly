@@ -52,7 +52,7 @@ export const CartContext = createContext({
   removeItemFromCart: () => {},
   clearItemFromCart: () => {},
   cartCount: 0,
-  cartTotal: 0
+  cartTotal: 0,
 });
 
 export const Cartprovider = ({ children }) => {
@@ -61,22 +61,24 @@ export const Cartprovider = ({ children }) => {
   const [cartCount, setCartCount] = useState(0);
   const [cartTotal, setCartTotal] = useState(0);
 
-  // useEffect runs only when it's dependecies change (cartItems in this case)
-  useEffect(() => { 
-    const newCartCount = cartItems.reduce(
-      (total, cartItem) => total + cartItem.quantity,
-      0 // total is the value returned, default is set to 0
-    ); 
-    setCartCount(newCartCount); // set new count 
+  // We use useffect() here to update our cartCount and cartTotal using our onClick handler which directly updates dependencies(cartItems)
+
+  useEffect(() => {  // useEffect runs only when it's dependecies change (cartItems in this case)
+    const newCartCount = cartItems.reduce( // reduce returns our accumulator value (not a new array)
+      (total, cartItem) => total + cartItem.quantity, // return total after callback
+      0 // total is set to 0 by default
+    );
+    setCartCount(newCartCount); // set new count
   }, [cartItems]); // run code only when cartItems changes
 
-    useEffect(() => {
-      const newCartTotal = cartItems.reduce(
-        (total, cartItem) => total + cartItem.quantity * cartItem.price,
-        0
-      ); 
-      setCartTotal(newCartTotal);
-    }, [cartItems]);
+  useEffect(() => {
+    const newCartTotal = cartItems.reduce(
+      (total, cartItem) => total + cartItem.quantity * cartItem.price,
+      0
+    );
+    setCartTotal(newCartTotal);
+  }, [cartItems]);
+  
 
   const addItemToCart = (productToAdd) => {
     setCartItems(addCartItem(cartItems, productToAdd));

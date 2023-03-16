@@ -12,7 +12,16 @@ import {
   onAuthStateChanged,
 } from "firebase/auth";
 
-import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  setDoc,
+  collection,
+  writeBatch,
+  query,
+  getDocs,
+} from "firebase/firestore";
 
 // import { getAnalytics } from "firebase/analytics";
 
@@ -52,6 +61,41 @@ export const signInWithGoogleRedirect = () =>
 // Database
 export const db = getFirestore();
 
+//ADD COLLECTION DATA
+export const addCollectionAndDocuments = async (
+  collectionKey,
+  objectsToAdd
+) => {
+  // collectionKey(categories), objectsToAdd(data object)
+  const collectionRef = collection(db, collectionKey); // collection ref points to or collectionKey in our database
+  const batch = writeBatch(db); // writeBatch to our db
+
+  objectsToAdd.forEach((object) => {
+    // for each data object
+    const docRef = doc(collectionRef, object.title.toLowerCase()); // create a doc ref going to our collectionRef, with object title as value
+    batch.set(docRef, object); // set to our docRef, with the object as our value
+  });
+
+  await batch.commit();
+  console.log("done batching");
+};
+
+// GET COLLECTION DATA
+export const getCategoriesAndDocuments = async () => {
+  const collectionRef = collection(db, "categories");
+  const q = query(collectionRef);
+
+  const querySnapshot = await getDocs(q);
+  const categoryMap = querySnapshot.docs.reduce((acc, docSnapshot) => { // we recieve docSnapshot from getDocs()
+    const { title, items } = docSnapshot.data(); 
+    acc[title.toLowerCase()] = items; // set the key(snapshot.name) = value(snapshot.item)
+    return acc;
+  }, {}); // all of the data will be store in a new object (default value)
+
+  return categoryMap;
+};
+
+//CREATE USER
 // we pass in our uid from our user object from our google auth response (inside of sign-inComponent.jsx)
 export const createUserDocumentFromAuth = async (
   userAuth,
