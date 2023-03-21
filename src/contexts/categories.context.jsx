@@ -9,7 +9,7 @@ export const CategoriesContext = createContext({
 });
 
 export const CategoriesProvider = ({ children }) => {
-  const [categoriesMap, setCategoriesMap] = useState({}); // initialize map as an empty object
+  const [categoriesMap, setCategoriesMap] = useState({}); // initialize as an empty object
   // useEffect(() => { // this was used only once to add data to our firebase db (save only for reference)
   //   addCollectionAndDocuments('categories', SHOP_DATA)
   // }, [])
